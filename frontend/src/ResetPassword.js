@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "./config";
 
 function ResetPassword({ setPage }) {
   const [token, setToken] = useState("");
@@ -16,7 +17,7 @@ function ResetPassword({ setPage }) {
     setLoading(true);
     setMessage("");
     try {
-      await axios.put(`http://localhost:5000/api/auth/reset-password/${token}`, { password });
+      await axios.put(`${API_BASE_URL}/api/auth/reset-password/${token}`, { password });
       setMessage("✅ Password reset successful! Redirecting to login...");
       setTimeout(() => setPage("login"), 2000);
     } catch (err) {

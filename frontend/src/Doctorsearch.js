@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import API_BASE_URL from "./config";
 
 // 🌟 Premium Custom Dropdown Select Component to replace standard native options
 function CustomSelect({ value, onChange, options, placeholder, icon, id }) {
@@ -159,7 +160,7 @@ function DoctorSearch() {
 
   const fetchSpecialties = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/auth/doctors");
+      const res = await axios.get(`${API_BASE_URL}/api/auth/doctors`);
       const specs = res.data.map(d => d.specialty).filter(Boolean);
       const uniqueSpecs = [...new Set(specs)];
       setAllSpecialties(uniqueSpecs);
@@ -171,7 +172,7 @@ function DoctorSearch() {
   const searchDoctors = async (customParams = {}) => {
     setLoading(true);
     try {
-      const res = await axios.get("http://localhost:5000/api/doctors/search", {
+      const res = await axios.get(`${API_BASE_URL}/api/doctors/search`, {
         params: {
           name: customParams.hasOwnProperty("name") ? customParams.name : name,
           specialty: customParams.hasOwnProperty("specialty") ? customParams.specialty : specialty,

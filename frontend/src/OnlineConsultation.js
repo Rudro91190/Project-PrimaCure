@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE_URL from "./config";
 
 function OnlineConsultation({ user }) {
   const [doctors, setDoctors] = useState([]);
@@ -45,7 +46,7 @@ function OnlineConsultation({ user }) {
   const fetchDoctors = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/auth/doctors",
+        `${API_BASE_URL}/api/auth/doctors`,
       );
       setDoctors(response.data);
     } catch (error) {
@@ -57,7 +58,7 @@ function OnlineConsultation({ user }) {
   const fetchConsultations = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/consultations/patient/${user._id}`,
+        `${API_BASE_URL}/api/consultations/patient/${user._id}`,
       );
       setConsultations(response.data);
     } catch (error) {
@@ -98,7 +99,7 @@ function OnlineConsultation({ user }) {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/consultations/request",
+        `${API_BASE_URL}/api/consultations/request`,
         {
           patientId: user._id,
           doctorId: form.doctorId,
@@ -147,7 +148,7 @@ function OnlineConsultation({ user }) {
     ) {
       try {
         await axios.put(
-          `http://localhost:5000/api/consultations/${consultationId}/cancel`,
+          `${API_BASE_URL}/api/consultations/${consultationId}/cancel`,
         );
         setMessage("Consultation cancelled successfully");
         setMessageType("success");

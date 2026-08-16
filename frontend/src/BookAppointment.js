@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE_URL from './config';
 
 function BookAppointment({ user }) {
   const [doctors, setDoctors] = useState([]);
@@ -13,7 +14,7 @@ function BookAppointment({ user }) {
   ];
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/auth/doctors')
+    axios.get(`${API_BASE_URL}/api/auth/doctors`)
       .then(res => setDoctors(res.data))
       .catch(() => setDoctors([]));
   }, []);
@@ -29,7 +30,7 @@ function BookAppointment({ user }) {
 
   const fetchReviews = async (doctorId) => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/appointments/reviews/${doctorId}`);
+      const res = await axios.get(`${API_BASE_URL}/api/appointments/reviews/${doctorId}`);
       setReviews(res.data);
     } catch (err) {
       setReviews([]);
@@ -40,7 +41,7 @@ function BookAppointment({ user }) {
     e.preventDefault();
     setMessage('');
     try {
-      await axios.post('http://localhost:5000/api/appointments/book', {
+      await axios.post(`${API_BASE_URL}/api/appointments/book`, {
         patientId: user._id,
         doctorId: form.doctorId,
         date: form.date,

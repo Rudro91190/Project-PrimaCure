@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE_URL from './config';
 
 function DoctorAppointments({ user }) {
   const [appointments, setAppointments] = useState([]);
@@ -26,7 +27,7 @@ function DoctorAppointments({ user }) {
     setError('');
 
     try {
-      const res = await axios.get(`http://localhost:5000/api/appointments/doctor/${doctorId}`);
+      const res = await axios.get(`${API_BASE_URL}/api/appointments/doctor/${doctorId}`);
       setAppointments(res.data || []);
     } catch (err) {
       setAppointments([]);
@@ -39,7 +40,7 @@ function DoctorAppointments({ user }) {
   const completeAppointment = async (appointmentId) => {
     if (window.confirm("Mark this appointment as completed?")) {
       try {
-        await axios.put(`http://localhost:5000/api/appointments/complete/${appointmentId}`);
+        await axios.put(`${API_BASE_URL}/api/appointments/complete/${appointmentId}`);
         fetchAppointments(); // Refresh list
       } catch (err) {
         alert('Error completing appointment');
@@ -49,7 +50,7 @@ function DoctorAppointments({ user }) {
 
   const confirmAppointment = async (appointmentId) => {
     try {
-      await axios.put(`http://localhost:5000/api/appointments/confirm/${appointmentId}`);
+      await axios.put(`${API_BASE_URL}/api/appointments/confirm/${appointmentId}`);
       fetchAppointments(); // Refresh list
     } catch (err) {
       alert('Error confirming appointment');
@@ -59,7 +60,7 @@ function DoctorAppointments({ user }) {
   const cancelAppointment = async (appointmentId) => {
     if (window.confirm("Are you sure you want to cancel this appointment?")) {
       try {
-        await axios.put(`http://localhost:5000/api/appointments/cancel/${appointmentId}`);
+        await axios.put(`${API_BASE_URL}/api/appointments/cancel/${appointmentId}`);
         fetchAppointments(); // Refresh list
       } catch (err) {
         alert('Error cancelling appointment');

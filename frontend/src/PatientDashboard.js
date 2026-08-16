@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE_URL from "./config";
 
 function PatientDashboard({ user }) {
   const [appointments, setAppointments] = useState([]);
@@ -19,7 +20,7 @@ function PatientDashboard({ user }) {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:5000/api/appointments/patient/${user._id}`,
+        `${API_BASE_URL}/api/appointments/patient/${user._id}`,
       );
       setAppointments(response.data);
     } catch (error) {
@@ -84,7 +85,7 @@ function PatientDashboard({ user }) {
 
     try {
       await axios.post(
-        `http://localhost:5000/api/appointments/review/${reviewModal._id}`,
+        `${API_BASE_URL}/api/appointments/review/${reviewModal._id}`,
         {
           rating: reviewForm.rating,
           review: reviewForm.review,

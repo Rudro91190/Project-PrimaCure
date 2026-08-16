@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PrintablePrescription from "./PrintablePrescription";
+import API_BASE_URL from "./config";
 
 function PatientPrescriptions({ user }) {
   const [prescriptions, setPrescriptions] = useState([]);
@@ -16,7 +17,7 @@ function PatientPrescriptions({ user }) {
 
   const fetchPrescriptions = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/prescriptions/patient/${user._id}`);
+      const res = await axios.get(`${API_BASE_URL}/api/prescriptions/patient/${user._id}`);
       setPrescriptions(res.data.prescriptions);
       
       const medsMap = {};

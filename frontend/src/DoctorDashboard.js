@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE_URL from './config';
 
 function DoctorDashboard({ user, setPage }) {
   const [appointments, setAppointments] = useState([]);
@@ -17,7 +18,7 @@ function DoctorDashboard({ user, setPage }) {
       return;
     }
     try {
-      const res = await axios.get(`http://localhost:5000/api/appointments/doctor/${doctorId}`);
+      const res = await axios.get(`${API_BASE_URL}/api/appointments/doctor/${doctorId}`);
       setAppointments(res.data || []);
     } catch {
       setAppointments([]);

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE_URL from "./config";
 
 function AdminPayments() {
   const [payments, setPayments] = useState([]);
@@ -15,7 +16,7 @@ function AdminPayments() {
 
   const fetchPayments = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/payments/all");
+      const res = await axios.get(`${API_BASE_URL}/api/payments/all`);
       setPayments(res.data.payments || []);
       setTransactions(res.data.transactions || []);
       setLoading(false);
@@ -27,7 +28,7 @@ function AdminPayments() {
 
   const handleUpdateStatus = async (paymentId, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/payments/update/${paymentId}`, { status: newStatus });
+      await axios.put(`${API_BASE_URL}/api/payments/update/${paymentId}`, { status: newStatus });
       alert(`Payment status updated to ${newStatus}!`);
       fetchPayments();
     } catch (err) {

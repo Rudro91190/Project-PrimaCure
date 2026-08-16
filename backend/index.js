@@ -20,6 +20,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.json({ message: "PrimaCure API is running successfully!" });
+});
+
 app.use("/api/auth", authRoutes);
 
 app.use("/api/appointments", appointmentRoutes);

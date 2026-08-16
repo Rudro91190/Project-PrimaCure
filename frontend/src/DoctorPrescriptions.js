@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PrintablePrescription from "./PrintablePrescription";
+import API_BASE_URL from "./config";
 
 function DoctorPrescriptions({ user }) {
   const [prescriptions, setPrescriptions] = useState([]);
@@ -28,7 +29,7 @@ function DoctorPrescriptions({ user }) {
 
   const fetchPrescriptions = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/prescriptions/doctor/${user._id}`);
+      const res = await axios.get(`${API_BASE_URL}/api/prescriptions/doctor/${user._id}`);
       setPrescriptions(res.data.prescriptions);
       
       const medsMap = {};
@@ -46,7 +47,7 @@ function DoctorPrescriptions({ user }) {
 
   const fetchPatients = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/prescriptions/patients");
+      const res = await axios.get(`${API_BASE_URL}/api/prescriptions/patients`);
       setPatients(res.data);
     } catch (err) {
       console.error("Error fetching patients", err);
@@ -75,14 +76,14 @@ function DoctorPrescriptions({ user }) {
     e.preventDefault();
     try {
       if (editingId) {
-        await axios.put(`http://localhost:5000/api/prescriptions/update/${editingId}`, {
+        await axios.put(`${API_BASE_URL}/api/prescriptions/update/${editingId}`, {
           diagnosis: form.diagnosis,
           notes: form.notes,
           medicines: form.medicines
         });
         alert("Prescription updated successfully!");
       } else {
-        await axios.post("http://localhost:5000/api/prescriptions/create", {
+        await axios.post(`${API_BASE_URL}/api/prescriptions/create`, {
           ...form,
           doctorId: user._id
         });

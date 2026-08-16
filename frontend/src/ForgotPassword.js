@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "./config";
 
 function ForgotPassword({ setPage }) {
   const [email, setEmail] = useState("");
@@ -11,7 +12,7 @@ function ForgotPassword({ setPage }) {
     setLoading(true);
     setMessage("");
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/forgot-password", { email });
+      const res = await axios.post(`${API_BASE_URL}/api/auth/forgot-password`, { email });
       setMessage("✅ Reset link sent! Check your email (or use the token provided in demo).");
       console.log("Reset Token (for demo):", res.data.token);
     } catch (err) {

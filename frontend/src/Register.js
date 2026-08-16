@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import API_BASE_URL from './config';
 
 function Register({ setPage }) {
   const [form, setForm] = useState({
@@ -30,7 +31,7 @@ function Register({ setPage }) {
     setMessage('');
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/auth/register', form);
+      await axios.post(`${API_BASE_URL}/api/auth/register`, form);
       setMessage('Registration successful! You can now log in.');
       setForm({
         email: '', password: '', confirmPassword: '', role: 'patient',

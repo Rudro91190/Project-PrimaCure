@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE_URL from "./config";
 
 function Profile({ user, onUpdate }) {
   const [fullName, setFullName] = useState("");
@@ -37,7 +38,7 @@ function Profile({ user, onUpdate }) {
 
   const getProfile = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/users/profile", {
+      const res = await axios.get(`${API_BASE_URL}/api/users/profile`, {
         headers: { 
           Authorization: token,
           userid: userId 
@@ -64,7 +65,7 @@ function Profile({ user, onUpdate }) {
 
   const getAppointments = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/appointments/patient/${userId}`, {
+      const res = await axios.get(`${API_BASE_URL}/api/appointments/patient/${userId}`, {
         headers: { Authorization: token },
       });
       setAppointments(res.data);
@@ -75,7 +76,7 @@ function Profile({ user, onUpdate }) {
 
   const getReviews = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/appointments/reviews/${userId}`, {
+      const res = await axios.get(`${API_BASE_URL}/api/appointments/reviews/${userId}`, {
         headers: { Authorization: token },
       });
       setReviews(res.data || []);
@@ -111,7 +112,7 @@ function Profile({ user, onUpdate }) {
       }
 
       const res = await axios.put(
-        `http://localhost:5000/api/users/update/${userId}`,
+        `${API_BASE_URL}/api/users/update/${userId}`,
         payload,
         { headers: { Authorization: token } }
       );
@@ -139,7 +140,7 @@ function Profile({ user, onUpdate }) {
     const formData = new FormData();
     formData.append("profilePhoto", photo);
     try {
-      const res = await axios.post(`http://localhost:5000/api/users/upload/${userId}`, formData, {
+      const res = await axios.post(`${API_BASE_URL}/api/users/upload/${userId}`, formData, {
         headers: {
           Authorization: token,
           "Content-Type": "multipart/form-data",

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PaymentReceipt from "./PaymentReceipt";
+import API_BASE_URL from "./config";
 
 function PatientPayments({ user }) {
   const [payments, setPayments] = useState([]);
@@ -16,7 +17,7 @@ function PatientPayments({ user }) {
 
   const fetchPayments = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/payments/patient/${user._id}`);
+      const res = await axios.get(`${API_BASE_URL}/api/payments/patient/${user._id}`);
       setPayments(res.data.payments);
       setTransactions(res.data.transactions);
       setLoading(false);
@@ -28,7 +29,7 @@ function PatientPayments({ user }) {
 
   const handlePay = async (paymentId) => {
     try {
-      const res = await axios.post("http://localhost:5000/api/payments/process", {
+      const res = await axios.post(`${API_BASE_URL}/api/payments/process`, {
         paymentId,
         paymentMethod
       });

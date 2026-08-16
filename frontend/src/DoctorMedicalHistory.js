@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE_URL from "./config";
 
 function DoctorMedicalHistory({ user }) {
   const [patients, setPatients] = useState([]);
@@ -25,7 +26,7 @@ function DoctorMedicalHistory({ user }) {
   const fetchPatients = async () => {
     try {
       // Using the prescription route we created earlier that gets all patients
-      const res = await axios.get("http://localhost:5000/api/prescriptions/patients");
+      const res = await axios.get(`${API_BASE_URL}/api/prescriptions/patients`);
       setPatients(res.data);
     } catch (err) {
       console.error("Error fetching patients", err);
@@ -36,8 +37,8 @@ function DoctorMedicalHistory({ user }) {
     setSelectedPatient(patient);
     try {
       const [histRes, repRes] = await Promise.all([
-        axios.get(`http://localhost:5000/api/medical-history/patient/${patient._id}`),
-        axios.get(`http://localhost:5000/api/reports/patient/${patient._id}`)
+        axios.get(`${API_BASE_URL}/api/medical-history/patient/${patient._id}`),
+        axios.get(`${API_BASE_URL}/api/reports/patient/${patient._id}`)
       ]);
       setHistory(histRes.data || []);
       setReports(repRes.data || []);
@@ -51,7 +52,7 @@ function DoctorMedicalHistory({ user }) {
   const handleAddHistory = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/medical-history/add", {
+      await axios.post(`${API_BASE_URL}/api/medical-history/add`, {
         patientId: selectedPatient._id,
         doctorId: user._id,
         ...historyForm
@@ -75,7 +76,7 @@ function DoctorMedicalHistory({ user }) {
     formData.append("reportFile", reportFile);
 
     try {
-      await axios.post("http://localhost:5000/api/reports/upload", formData, {
+      await axios.post(`${API_BASE_URL}/api/reports/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" }
       });
       alert("Report uploaded successfully!");

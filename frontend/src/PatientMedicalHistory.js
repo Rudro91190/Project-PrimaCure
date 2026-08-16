@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE_URL from "./config";
 
 function PatientMedicalHistory({ user }) {
   const [history, setHistory] = useState([]);
@@ -18,10 +19,10 @@ function PatientMedicalHistory({ user }) {
     try {
       setLoading(true);
       const [histRes, repRes, apptRes, presRes] = await Promise.all([
-        axios.get(`http://localhost:5000/api/medical-history/patient/${user._id}`),
-        axios.get(`http://localhost:5000/api/reports/patient/${user._id}`),
-        axios.get(`http://localhost:5000/api/appointments/patient/${user._id}`),
-        axios.get(`http://localhost:5000/api/prescriptions/patient/${user._id}`)
+        axios.get(`${API_BASE_URL}/api/medical-history/patient/${user._id}`),
+        axios.get(`${API_BASE_URL}/api/reports/patient/${user._id}`),
+        axios.get(`${API_BASE_URL}/api/appointments/patient/${user._id}`),
+        axios.get(`${API_BASE_URL}/api/prescriptions/patient/${user._id}`)
       ]);
       setHistory(histRes.data || []);
       setReports(repRes.data || []);
